@@ -27,7 +27,7 @@ module Testapp
 
     # Get All Owners
     # GET url = /owners
-    # [{"id":1,"name":"James","created_at":"2016-11-13T23:19:32.249Z","updated_at":"2016-11-13T23:19:32.249Z"}]
+    #Response: [{"id":1,"name":"James","created_at":"2016-11-13T23:19:32.249Z","updated_at":"2016-11-13T23:19:32.249Z"}]
     resource :owners do
       get '/' do
         Owner.all
@@ -36,13 +36,13 @@ module Testapp
 
     # Get Owner by name
     # GET url = /:owner_name = /James
-    # {"id":1,"name":"James","created_at":"2016-11-13T23:19:32.249Z","updated_at":"2016-11-13T23:19:32.249Z"}
+    #Response: {"id":1,"name":"James","created_at":"2016-11-13T23:19:32.249Z","updated_at":"2016-11-13T23:19:32.249Z"}
     get '/:owner_name' do
       Owner.find_by_name(params[:owner_name])
     end
 
     # Get # url /:owner_name/articles = /James/articles
-    # {"owner_name":"James","articles":[{"id":1,"owner_id":1,"name":"First article","description":"This is test","price":"1.22","created_at":"2016-11-13T23:20:08.897Z","updated_at":"2016-11-13T23:20:08.897Z"}]}
+    #Response: {"owner_name":"James","articles":[{"id":1,"owner_id":1,"name":"First article","description":"This is test","price":"1.22","created_at":"2016-11-13T23:20:08.897Z","updated_at":"2016-11-13T23:20:08.897Z"}]}
     resource "/" do
       params do
         requires :owner_name, type: String
@@ -73,7 +73,7 @@ module Testapp
 
     # Get Article by id
     # GET url = /articles/:id
-    # {"id":1,"name":"First article","description":"This is test","price":"1.22","owner_name":"James"}
+    # Response: {"id":1,"name":"First article","description":"This is test","price":"1.22","owner_name":"James"}
     get '/articles/:id' do
       Article.select('own.name as owner_name, articles.id, articles.name, articles.price, articles.description')
           .joins(' LEFT JOIN owners as own on own.id = articles.owner_id ')
